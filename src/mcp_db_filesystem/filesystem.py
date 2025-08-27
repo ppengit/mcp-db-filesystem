@@ -338,23 +338,62 @@ class FilesystemManager:
             raise FilesystemOperationError(f"Failed to create directory: {e}")
     
     def delete_file(self, file_path: Union[str, Path]) -> None:
-        """Delete file."""
+        """Delete file with enhanced error handling."""
+        import time
+        import stat
+
         file_path = Path(file_path)
         self._validate_file_operation(file_path, 'delete')
-        
+
         try:
             if not file_path.exists():
                 raise FilesystemOperationError(f"File does not exist: {file_path}")
-            
-            if file_path.is_file():
-                file_path.unlink()
-                logger.info(f"File deleted successfully: {file_path}")
-            else:
+
+            if not file_path.is_file():
                 raise FilesystemOperationError(f"Path is not a file: {file_path}")
-            
+
+            # 尝试删除文件，如果失败则尝试修改权限后重试
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    # 尝试删除文件
+                    file_path.unlink()
+                    logger.info(f"File deleted successfully: {file_path}")
+                    return
+
+                except PermissionError as pe:
+                    if attempt < max_retries - 1:
+                        logger.warning(f"Permission denied on attempt {attempt + 1}, trying to fix permissions: {pe}")
+                        try:
+                            # 尝试修改文件权限
+                            file_path.chmod(stat.S_IWRITE | stat.S_IREAD)
+                            time.sleep(0.1)  # 短暂等待
+                            continue
+                        except Exception as chmod_error:
+                            logger.warning(f"Failed to change file permissions: {chmod_error}")
+                    else:
+                        raise FilesystemOperationError(f"Permission denied: Cannot delete file {file_path}. File may be in use or you may not have sufficient permissions.")
+
+                except OSError as ose:
+                    if attempt < max_retries - 1:
+                        logger.warning(f"OS error on attempt {attempt + 1}: {ose}")
+                        time.sleep(0.1)  # 短暂等待后重试
+                        continue
+                    else:
+                        # 提供更详细的错误信息
+                        if "being used by another process" in str(ose).lower():
+                            raise FilesystemOperationError(f"File is being used by another process: {file_path}")
+                        elif "access is denied" in str(ose).lower():
+                            raise FilesystemOperationError(f"Access denied: Cannot delete file {file_path}. Check file permissions.")
+                        else:
+                            raise FilesystemOperationError(f"Cannot delete file {file_path}: {ose}")
+
+        except FilesystemOperationError:
+            # 重新抛出我们自己的错误
+            raise
         except Exception as e:
-            logger.error(f"Failed to delete file {file_path}: {e}")
-            raise FilesystemOperationError(f"Failed to delete file: {e}")
+            logger.error(f"Unexpected error deleting file {file_path}: {e}")
+            raise FilesystemOperationError(f"Unexpected error deleting file: {e}")
 
 
 # Global filesystem manager instance

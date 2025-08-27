@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2025-08-27
+
+### Fixed
+- **File Operations UX**: Changed default behavior for file operations to be more user-friendly
+  - `write_file` now defaults to allowing file overwrite (no confirmation required)
+  - `delete_file` now defaults to allowing file deletion (no confirmation required)
+  - Users can still set `confirm: false` to require explicit confirmation
+
+### Enhanced
+- **File Deletion Robustness**: Improved file deletion with enhanced error handling
+  - Added retry mechanism for permission errors
+  - Automatic permission fixing for locked files
+  - Better error messages for common issues (file in use, access denied)
+  - Support for Chinese and Unicode filenames
+
+### Changed
+- **Default Behavior**: File operations are now more streamlined
+  - `write_file`: `confirm` parameter defaults to `true` (allow overwrite)
+  - `delete_file`: `confirm` parameter defaults to `true` (allow deletion)
+  - Only when explicitly set to `false` will confirmation be required
+
+### Technical Improvements
+- Enhanced file deletion with multiple retry attempts
+- Improved permission handling on Windows systems
+- Better error categorization and user feedback
+- Comprehensive testing for all file operation scenarios
+
 ## [1.1.2] - 2025-08-26
 
 ### Added

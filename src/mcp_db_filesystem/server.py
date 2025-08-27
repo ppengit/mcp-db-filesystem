@@ -1121,14 +1121,15 @@ async def handle_write_file(arguments: Dict[str, Any]) -> List[TextContent]:
     content = arguments.get("content", "")
     encoding = arguments.get("encoding", "utf-8")
     create_dirs = arguments.get("create_dirs", True)
-    confirm = arguments.get("confirm", False)
+    confirm = arguments.get("confirm", True)  # 默认允许覆盖
 
     try:
         # Check if confirmation is required for overwriting existing files
         from pathlib import Path
         path = Path(file_path)
 
-        if path.exists() and not confirm:
+        # 只有当用户明确设置 confirm=false 时才要求确认
+        if path.exists() and confirm is False:
             return [TextContent(
                 type="text",
                 text=f"File '{file_path}' already exists. Please add 'confirm': true to overwrite."
@@ -1180,7 +1181,7 @@ async def handle_list_directory(arguments: Dict[str, Any]) -> List[TextContent]:
 async def handle_delete_file(arguments: Dict[str, Any]) -> List[TextContent]:
     """Handle file deletion."""
     file_path = arguments.get("file_path", "")
-    confirm = arguments.get("confirm", False)
+    confirm = arguments.get("confirm", True)  # 默认允许删除
 
     try:
         from pathlib import Path
@@ -1190,8 +1191,8 @@ async def handle_delete_file(arguments: Dict[str, Any]) -> List[TextContent]:
         if not path.exists():
             return [TextContent(type="text", text=f"File does not exist: '{file_path}'")]
 
-        # Require confirmation for file deletion
-        if not confirm:
+        # 只有当用户明确设置 confirm=false 时才要求确认
+        if confirm is False:
             return [TextContent(
                 type="text",
                 text=f"File deletion requires confirmation. Please add 'confirm': true to delete: '{file_path}'"
