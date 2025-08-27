@@ -2,15 +2,29 @@
 
 [English](README_EN.md) | 中文
 
-一个简洁高效的 MCP (Model Context Protocol) 服务器，提供数据库访问和文件系统操作功能。
+一个简洁高效的 MCP (Model Context Protocol) 服务器，提供多数据库访问和文件系统操作功能。
 
 ## ✨ 主要特性
 
-### 🗄️ 数据库功能
+### 🗄️ 多数据库支持
+
+#### SQL Server
 - **SQL 查询执行** - 支持 SELECT 查询
 - **SQL 命令执行** - 支持 INSERT/UPDATE/DELETE 操作
 - **表结构查询** - 获取表的详细结构信息和字段描述
 - **表列表** - 列出数据库中的所有表
+
+#### MySQL
+- **MySQL 查询执行** - 支持 MySQL SELECT 查询
+- **MySQL 命令执行** - 支持 INSERT/UPDATE/DELETE 操作
+- **MySQL 表结构查询** - 获取 MySQL 表的详细结构信息
+- **MySQL 表列表** - 列出 MySQL 数据库中的所有表
+
+#### Redis
+- **键值操作** - GET/SET/DELETE 键值对
+- **键管理** - 列出匹配模式的键
+- **服务器信息** - 获取 Redis 服务器状态信息
+- **过期设置** - 支持键的过期时间设置
 
 ### 📁 文件系统功能
 - **文件读取** - 读取文件内容
@@ -23,11 +37,19 @@
 - 环境变量配置
 - 权限验证
 
+### 🔄 容错机制
+- **优雅降级** - 任何数据库连接失败时不影响其他服务
+- **动态重连** - 支持运行时重新连接各种数据库
+- **状态监控** - 实时监控所有数据库连接状态
+
 ## 🚀 快速开始
 
 ### 📋 前置要求
 
-#### 1. 安装 ODBC Driver for SQL Server
+根据您要使用的数据库服务，安装相应的驱动程序：
+
+#### 1. SQL Server (可选)
+安装 ODBC Driver for SQL Server
 
 **Windows:**
 ```bash
@@ -66,6 +88,12 @@ odbcad32.exe
 odbcinst -j
 ```
 
+#### 2. MySQL (可选)
+如果要使用 MySQL 功能，确保 MySQL 服务器可访问。不需要额外的客户端驱动，PyMySQL 已包含在依赖中。
+
+#### 3. Redis (可选)
+如果要使用 Redis 功能，确保 Redis 服务器可访问。不需要额外的客户端驱动，redis-py 已包含在依赖中。
+
 ### 📦 零安装使用（推荐）
 
 ```bash
@@ -83,9 +111,9 @@ uvx mcp-db-filesystem@latest
 ```json
 {
   "mcpServers": {
-    "mcp-sqlserver-filesystem": {
+    "mcp-db-filesystem": {
       "command": "uvx",
-      "args": ["mcp-sqlserver-filesystem@latest"],
+      "args": ["mcp-db-filesystem@latest"],
       "env": {
         "DB_SERVER": "localhost",
         "DB_DATABASE": "your_database",
@@ -105,22 +133,39 @@ uvx mcp-db-filesystem@latest
 
 ## 🛠️ 可用工具
 
-### 数据库工具
+### SQL Server 工具
+- `sql_query` - 执行 SQL Server SELECT 查询
+- `sql_execute` - 执行 SQL Server INSERT/UPDATE/DELETE 命令
+- `list_tables` - 列出 SQL Server 数据库中的所有表
+- `get_table_schema` - 获取 SQL Server 表的结构信息
+- `database_reconnect` - 重新连接 SQL Server
 
-- `sql_query` - 执行 SQL SELECT 查询
-- `sql_execute` - 执行 SQL INSERT/UPDATE/DELETE 命令
-- `list_tables` - 列出数据库中的所有表
-- `get_table_schema` - 获取表的结构信息
+### MySQL 工具
+- `mysql_query` - 执行 MySQL SELECT 查询
+- `mysql_execute` - 执行 MySQL INSERT/UPDATE/DELETE 命令
+- `mysql_list_tables` - 列出 MySQL 数据库中的所有表
+- `mysql_get_table_schema` - 获取 MySQL 表的结构信息
+- `mysql_reconnect` - 重新连接 MySQL
+
+### Redis 工具
+- `redis_get` - 获取 Redis 键值
+- `redis_set` - 设置 Redis 键值（支持过期时间）
+- `redis_delete` - 删除 Redis 键
+- `redis_keys` - 列出匹配模式的 Redis 键
+- `redis_info` - 获取 Redis 服务器信息
+- `redis_reconnect` - 重新连接 Redis
+
+### 数据库管理工具
+- `database_status` - 检查所有数据库连接状态
 
 ### 文件系统工具
-
 - `read_file` - 读取文件内容
 - `write_file` - 写入文件内容
 - `list_directory` - 列出目录内容
 
 ## 📋 环境变量
 
-### 数据库配置
+### SQL Server 配置
 - `DB_SERVER` - SQL Server 服务器地址
 - `DB_DATABASE` - 数据库名称
 - `DB_USERNAME` - 用户名
@@ -128,6 +173,26 @@ uvx mcp-db-filesystem@latest
 - `DB_USE_WINDOWS_AUTH` - 是否使用 Windows 身份验证
 - `DB_TRUST_SERVER_CERTIFICATE` - 是否信任服务器证书
 - `DB_ENCRYPT` - 是否加密连接
+
+### MySQL 配置
+- `MYSQL_HOST` - MySQL 服务器地址
+- `MYSQL_PORT` - MySQL 端口（默认 3306）
+- `MYSQL_DATABASE` - MySQL 数据库名称
+- `MYSQL_USERNAME` - MySQL 用户名
+- `MYSQL_PASSWORD` - MySQL 密码
+- `MYSQL_CHARSET` - 字符集（默认 utf8mb4）
+- `MYSQL_CONNECTION_TIMEOUT` - 连接超时时间（秒）
+- `MYSQL_POOL_SIZE` - 连接池大小
+- `MYSQL_MAX_OVERFLOW` - 最大溢出连接数
+
+### Redis 配置
+- `REDIS_HOST` - Redis 服务器地址
+- `REDIS_PORT` - Redis 端口（默认 6379）
+- `REDIS_DB` - Redis 数据库编号（默认 0）
+- `REDIS_PASSWORD` - Redis 密码（可选）
+- `REDIS_SOCKET_TIMEOUT` - Socket 超时时间（秒）
+- `REDIS_CONNECTION_TIMEOUT` - 连接超时时间（秒）
+- `REDIS_MAX_CONNECTIONS` - 最大连接数
 
 ### 文件系统配置
 - `FS_ALLOWED_PATHS` - 允许访问的路径（`*` 表示所有路径）

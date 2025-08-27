@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-08-26
+
+### Added
+- **MySQL Support**: Full MySQL database integration with connection management
+  - `mysql_query`: Execute MySQL SELECT queries
+  - `mysql_execute`: Execute MySQL INSERT/UPDATE/DELETE operations
+  - `mysql_get_table_schema`: Get MySQL table schema information
+  - `mysql_list_tables`: List all tables in MySQL database
+  - `mysql_reconnect`: Reconnect to MySQL database
+- **Redis Support**: Complete Redis integration with key-value operations
+  - `redis_get`: Get value by key
+  - `redis_set`: Set key-value pairs with optional expiration
+  - `redis_delete`: Delete one or more keys
+  - `redis_keys`: Get keys matching pattern
+  - `redis_info`: Get Redis server information
+  - `redis_reconnect`: Reconnect to Redis server
+- **Enhanced Database Status**: Updated `database_status` tool to show all database connections
+- **Graceful Degradation**: All database services fail gracefully without affecting other services
+
+### Changed
+- **Multi-Database Architecture**: Now supports SQL Server, MySQL, and Redis simultaneously
+- **Enhanced Configuration**: Added MySQL and Redis configuration options
+- **Improved Error Handling**: Better error messages and connection status reporting
+- **Updated Dependencies**: Added `pymysql>=1.1.0` and `redis>=5.0.0`
+
+### Configuration
+New environment variables for MySQL:
+- `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_DATABASE`
+- `MYSQL_USERNAME`, `MYSQL_PASSWORD`
+- `MYSQL_CHARSET`, `MYSQL_CONNECTION_TIMEOUT`
+- `MYSQL_POOL_SIZE`, `MYSQL_MAX_OVERFLOW`
+
+New environment variables for Redis:
+- `REDIS_HOST`, `REDIS_PORT`, `REDIS_DB`
+- `REDIS_PASSWORD`
+- `REDIS_SOCKET_TIMEOUT`, `REDIS_CONNECTION_TIMEOUT`
+- `REDIS_MAX_CONNECTIONS`
+
 ## [1.0.4] - 2025-08-26
 
 ### Changed

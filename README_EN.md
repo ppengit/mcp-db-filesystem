@@ -2,15 +2,29 @@
 
 English | [中文](README.md)
 
-A simple and efficient MCP (Model Context Protocol) server providing database access and filesystem operations.
+A simple and efficient MCP (Model Context Protocol) server providing multi-database access and filesystem operations.
 
 ## ✨ Key Features
 
-### 🗄️ Database Functions
+### 🗄️ Multi-Database Support
+
+#### SQL Server
 - **SQL Query Execution** - Support for SELECT queries
 - **SQL Command Execution** - Support for INSERT/UPDATE/DELETE operations
 - **Table Schema Query** - Get detailed table structure information and field descriptions
 - **Table Listing** - List all tables in the database
+
+#### MySQL
+- **MySQL Query Execution** - Support for MySQL SELECT queries
+- **MySQL Command Execution** - Support for INSERT/UPDATE/DELETE operations
+- **MySQL Table Schema Query** - Get detailed MySQL table structure information
+- **MySQL Table Listing** - List all tables in MySQL database
+
+#### Redis
+- **Key-Value Operations** - GET/SET/DELETE key-value pairs
+- **Key Management** - List keys matching patterns
+- **Server Information** - Get Redis server status information
+- **Expiration Settings** - Support key expiration time settings
 
 ### 📁 Filesystem Functions
 - **File Reading** - Read file contents
@@ -22,6 +36,11 @@ A simple and efficient MCP (Model Context Protocol) server providing database ac
 - Filesystem access control
 - Environment variable configuration
 - Permission validation
+
+### 🔄 Fault Tolerance
+- **Graceful Degradation** - Any database connection failure doesn't affect other services
+- **Dynamic Reconnection** - Support runtime reconnection to various databases
+- **Status Monitoring** - Real-time monitoring of all database connection status
 
 ## 🚀 Quick Start
 
@@ -85,7 +104,7 @@ Add the following configuration to your MCP client (such as Claude Desktop, Augm
   "mcpServers": {
     "mcp-db-filesystem": {
       "command": "uvx",
-      "args": ["mcp-sqlserver-filesystem@latest"],
+      "args": ["mcp-db-filesystem@latest"],
       "env": {
         "DB_SERVER": "localhost",
         "DB_DATABASE": "your_database",

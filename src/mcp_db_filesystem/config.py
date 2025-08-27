@@ -71,6 +71,50 @@ class DatabaseConfig(BaseModel):
         return ";".join(all_params) + ";"
 
 
+class MySQLConfig(BaseModel):
+    """MySQL database configuration."""
+
+    host: str = Field("", description="MySQL server hostname or IP address")
+    port: int = Field(3306, description="MySQL server port")
+    database: str = Field("", description="Database name")
+    username: Optional[str] = Field(None, description="Username for MySQL authentication")
+    password: Optional[str] = Field(None, description="Password for MySQL authentication")
+    charset: str = Field("utf8mb4", description="Character set")
+    connection_timeout: int = Field(30, description="Connection timeout in seconds")
+    pool_size: int = Field(5, description="Connection pool size")
+    max_overflow: int = Field(10, description="Maximum overflow connections")
+
+    @validator('port')
+    def validate_port(cls, v):
+        if not 1 <= v <= 65535:
+            raise ValueError('Port must be between 1 and 65535')
+        return v
+
+
+class RedisConfig(BaseModel):
+    """Redis configuration."""
+
+    host: str = Field("", description="Redis server hostname or IP address")
+    port: int = Field(6379, description="Redis server port")
+    db: int = Field(0, description="Redis database number")
+    password: Optional[str] = Field(None, description="Redis password")
+    socket_timeout: int = Field(30, description="Socket timeout in seconds")
+    connection_timeout: int = Field(30, description="Connection timeout in seconds")
+    max_connections: int = Field(10, description="Maximum connections in pool")
+
+    @validator('port')
+    def validate_port(cls, v):
+        if not 1 <= v <= 65535:
+            raise ValueError('Port must be between 1 and 65535')
+        return v
+
+    @validator('db')
+    def validate_db(cls, v):
+        if not 0 <= v <= 15:
+            raise ValueError('Redis database number must be between 0 and 15')
+        return v
+
+
 class FilesystemConfig(BaseModel):
     """Filesystem access configuration."""
 
@@ -154,8 +198,10 @@ class ServerConfig(BaseModel):
 
 class Config(BaseModel):
     """Main configuration class."""
-    
+
     database: DatabaseConfig
+    mysql: MySQLConfig = Field(default_factory=MySQLConfig)
+    redis: RedisConfig = Field(default_factory=RedisConfig)
     filesystem: FilesystemConfig = Field(default_factory=FilesystemConfig)
     security: SecurityConfig = Field(default_factory=SecurityConfig)
     server: ServerConfig = Field(default_factory=ServerConfig)
@@ -183,7 +229,31 @@ class Config(BaseModel):
             multiple_active_result_sets=os.getenv('DB_MULTIPLE_ACTIVE_RESULT_SETS', 'true').lower() == 'true',
             application_name=os.getenv('DB_APPLICATION_NAME', 'MCP-Db-Filesystem'),
         )
-        
+
+        # MySQL configuration
+        mysql_config = MySQLConfig(
+            host=os.getenv('MYSQL_HOST', ''),
+            port=int(os.getenv('MYSQL_PORT', '3306')),
+            database=os.getenv('MYSQL_DATABASE', ''),
+            username=os.getenv('MYSQL_USERNAME'),
+            password=os.getenv('MYSQL_PASSWORD'),
+            charset=os.getenv('MYSQL_CHARSET', 'utf8mb4'),
+            connection_timeout=int(os.getenv('MYSQL_CONNECTION_TIMEOUT', '30')),
+            pool_size=int(os.getenv('MYSQL_POOL_SIZE', '5')),
+            max_overflow=int(os.getenv('MYSQL_MAX_OVERFLOW', '10')),
+        )
+
+        # Redis configuration
+        redis_config = RedisConfig(
+            host=os.getenv('REDIS_HOST', ''),
+            port=int(os.getenv('REDIS_PORT', '6379')),
+            db=int(os.getenv('REDIS_DB', '0')),
+            password=os.getenv('REDIS_PASSWORD'),
+            socket_timeout=int(os.getenv('REDIS_SOCKET_TIMEOUT', '30')),
+            connection_timeout=int(os.getenv('REDIS_CONNECTION_TIMEOUT', '30')),
+            max_connections=int(os.getenv('REDIS_MAX_CONNECTIONS', '10')),
+        )
+
         # Filesystem configuration
         allowed_paths = os.getenv('FS_ALLOWED_PATHS', '').split(',') if os.getenv('FS_ALLOWED_PATHS') else []
         allowed_extensions = set(os.getenv('FS_ALLOWED_EXTENSIONS', '').split(',')) if os.getenv('FS_ALLOWED_EXTENSIONS') else set()
@@ -214,6 +284,8 @@ class Config(BaseModel):
         
         return cls(
             database=db_config,
+            mysql=mysql_config,
+            redis=redis_config,
             filesystem=fs_config,
             security=security_config,
             server=server_config,
