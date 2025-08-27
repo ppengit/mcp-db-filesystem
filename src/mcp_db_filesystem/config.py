@@ -209,25 +209,25 @@ class Config(BaseModel):
     @classmethod
     def from_env(cls) -> 'Config':
         """Create configuration from environment variables."""
-        # Database configuration
+        # SQL Server configuration
         db_config = DatabaseConfig(
-            server=os.getenv('DB_SERVER', 'localhost'),
-            database=os.getenv('DB_DATABASE', 'master'),
-            username=os.getenv('DB_USERNAME'),
-            password=os.getenv('DB_PASSWORD'),
-            use_windows_auth=os.getenv('DB_USE_WINDOWS_AUTH', 'true').lower() == 'true',
-            port=int(os.getenv('DB_PORT', '1433')),
-            driver=os.getenv('DB_DRIVER', 'ODBC Driver 17 for SQL Server'),
-            connection_timeout=int(os.getenv('DB_CONNECTION_TIMEOUT', '30')),
-            command_timeout=int(os.getenv('DB_COMMAND_TIMEOUT', '30')),
-            pool_size=int(os.getenv('DB_POOL_SIZE', '5')),
-            max_overflow=int(os.getenv('DB_MAX_OVERFLOW', '10')),
+            server=os.getenv('MSSQL_SERVER', 'localhost'),
+            database=os.getenv('MSSQL_DATABASE', 'master'),
+            username=os.getenv('MSSQL_USERNAME'),
+            password=os.getenv('MSSQL_PASSWORD'),
+            use_windows_auth=os.getenv('MSSQL_USE_WINDOWS_AUTH', 'true').lower() == 'true',
+            port=int(os.getenv('MSSQL_PORT', '1433')),
+            driver=os.getenv('MSSQL_DRIVER', 'ODBC Driver 17 for SQL Server'),
+            connection_timeout=int(os.getenv('MSSQL_CONNECTION_TIMEOUT', '30')),
+            command_timeout=int(os.getenv('MSSQL_COMMAND_TIMEOUT', '30')),
+            pool_size=int(os.getenv('MSSQL_POOL_SIZE', '5')),
+            max_overflow=int(os.getenv('MSSQL_MAX_OVERFLOW', '10')),
 
             # 新增的连接参数
-            trust_server_certificate=os.getenv('DB_TRUST_SERVER_CERTIFICATE', 'true').lower() == 'true',
-            encrypt=os.getenv('DB_ENCRYPT', 'false').lower() == 'true',
-            multiple_active_result_sets=os.getenv('DB_MULTIPLE_ACTIVE_RESULT_SETS', 'true').lower() == 'true',
-            application_name=os.getenv('DB_APPLICATION_NAME', 'MCP-Db-Filesystem'),
+            trust_server_certificate=os.getenv('MSSQL_TRUST_SERVER_CERTIFICATE', 'true').lower() == 'true',
+            encrypt=os.getenv('MSSQL_ENCRYPT', 'false').lower() == 'true',
+            multiple_active_result_sets=os.getenv('MSSQL_MULTIPLE_ACTIVE_RESULT_SETS', 'true').lower() == 'true',
+            application_name=os.getenv('MSSQL_APPLICATION_NAME', 'MCP-Db-Filesystem'),
         )
 
         # MySQL configuration

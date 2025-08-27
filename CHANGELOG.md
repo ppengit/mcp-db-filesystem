@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-08-26
+
+### Changed
+- **BREAKING**: SQL Server environment variables renamed from `DB_XXX` to `MSSQL_XXX` for consistency
+  - `DB_SERVER` → `MSSQL_SERVER`
+  - `DB_DATABASE` → `MSSQL_DATABASE`
+  - `DB_USERNAME` → `MSSQL_USERNAME`
+  - `DB_PASSWORD` → `MSSQL_PASSWORD`
+  - `DB_USE_WINDOWS_AUTH` → `MSSQL_USE_WINDOWS_AUTH`
+  - `DB_PORT` → `MSSQL_PORT`
+  - `DB_DRIVER` → `MSSQL_DRIVER`
+  - `DB_CONNECTION_TIMEOUT` → `MSSQL_CONNECTION_TIMEOUT`
+  - `DB_COMMAND_TIMEOUT` → `MSSQL_COMMAND_TIMEOUT`
+  - `DB_POOL_SIZE` → `MSSQL_POOL_SIZE`
+  - `DB_MAX_OVERFLOW` → `MSSQL_MAX_OVERFLOW`
+  - `DB_TRUST_SERVER_CERTIFICATE` → `MSSQL_TRUST_SERVER_CERTIFICATE`
+  - `DB_ENCRYPT` → `MSSQL_ENCRYPT`
+  - `DB_MULTIPLE_ACTIVE_RESULT_SETS` → `MSSQL_MULTIPLE_ACTIVE_RESULT_SETS`
+  - `DB_APPLICATION_NAME` → `MSSQL_APPLICATION_NAME`
+
+### Added
+- Complete configuration examples with all available environment variables
+- Enhanced documentation with comprehensive configuration options
+
+### Migration Guide
+Update your environment variables from `DB_XXX` to `MSSQL_XXX` format:
+```bash
+# Old format (deprecated)
+DB_SERVER=localhost
+DB_DATABASE=mydb
+
+# New format (required)
+MSSQL_SERVER=localhost
+MSSQL_DATABASE=mydb
+```
+
 ## [1.1.0] - 2025-08-26
 
 ### Added

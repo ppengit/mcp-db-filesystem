@@ -115,16 +115,57 @@ uvx mcp-db-filesystem@latest
       "command": "uvx",
       "args": ["mcp-db-filesystem@latest"],
       "env": {
-        "DB_SERVER": "localhost",
-        "DB_DATABASE": "your_database",
-        "DB_USERNAME": "your_username",
-        "DB_PASSWORD": "your_password",
-        "DB_USE_WINDOWS_AUTH": "false",
-        "DB_TRUST_SERVER_CERTIFICATE": "true",
-        "DB_ENCRYPT": "false",
+        // SQL Server Configuration (可选)
+        "MSSQL_SERVER": "localhost",
+        "MSSQL_DATABASE": "your_database",
+        "MSSQL_USERNAME": "your_username",
+        "MSSQL_PASSWORD": "your_password",
+        "MSSQL_USE_WINDOWS_AUTH": "true",
+        "MSSQL_PORT": "1433",
+        "MSSQL_DRIVER": "ODBC Driver 17 for SQL Server",
+        "MSSQL_CONNECTION_TIMEOUT": "30",
+        "MSSQL_COMMAND_TIMEOUT": "30",
+        "MSSQL_POOL_SIZE": "5",
+        "MSSQL_MAX_OVERFLOW": "10",
+        "MSSQL_TRUST_SERVER_CERTIFICATE": "true",
+        "MSSQL_ENCRYPT": "false",
+        "MSSQL_MULTIPLE_ACTIVE_RESULT_SETS": "true",
+        "MSSQL_APPLICATION_NAME": "MCP-Db-Filesystem",
+
+        // MySQL Configuration (可选)
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PORT": "3306",
+        "MYSQL_DATABASE": "your_mysql_database",
+        "MYSQL_USERNAME": "your_mysql_username",
+        "MYSQL_PASSWORD": "your_mysql_password",
+        "MYSQL_CHARSET": "utf8mb4",
+        "MYSQL_CONNECTION_TIMEOUT": "30",
+        "MYSQL_POOL_SIZE": "5",
+        "MYSQL_MAX_OVERFLOW": "10",
+
+        // Redis Configuration (可选)
+        "REDIS_HOST": "localhost",
+        "REDIS_PORT": "6379",
+        "REDIS_DB": "0",
+        "REDIS_PASSWORD": "your_redis_password",
+        "REDIS_SOCKET_TIMEOUT": "30",
+        "REDIS_CONNECTION_TIMEOUT": "30",
+        "REDIS_MAX_CONNECTIONS": "10",
+
+        // Filesystem Configuration
         "FS_ALLOWED_PATHS": "*",
         "FS_ALLOWED_EXTENSIONS": "*.*",
-        "FS_IGNORE_FILE_LOCKS": "true"
+        "FS_IGNORE_FILE_LOCKS": "false",
+
+        // Security Configuration
+        "SECURITY_ENABLE_SQL_INJECTION_PROTECTION": "true",
+        "SECURITY_MAX_QUERY_LENGTH": "10000",
+        "SECURITY_ENABLE_QUERY_LOGGING": "true",
+        "SECURITY_LOG_SENSITIVE_DATA": "false",
+
+        // Server Configuration
+        "SERVER_LOG_LEVEL": "INFO",
+        "SERVER_DEBUG": "false"
       }
     }
   }
@@ -166,13 +207,21 @@ uvx mcp-db-filesystem@latest
 ## 📋 环境变量
 
 ### SQL Server 配置
-- `DB_SERVER` - SQL Server 服务器地址
-- `DB_DATABASE` - 数据库名称
-- `DB_USERNAME` - 用户名
-- `DB_PASSWORD` - 密码
-- `DB_USE_WINDOWS_AUTH` - 是否使用 Windows 身份验证
-- `DB_TRUST_SERVER_CERTIFICATE` - 是否信任服务器证书
-- `DB_ENCRYPT` - 是否加密连接
+- `MSSQL_SERVER` - SQL Server 服务器地址
+- `MSSQL_DATABASE` - 数据库名称
+- `MSSQL_USERNAME` - 用户名
+- `MSSQL_PASSWORD` - 密码
+- `MSSQL_USE_WINDOWS_AUTH` - 是否使用 Windows 身份验证
+- `MSSQL_PORT` - SQL Server 端口（默认 1433）
+- `MSSQL_DRIVER` - ODBC 驱动名称
+- `MSSQL_CONNECTION_TIMEOUT` - 连接超时时间（秒）
+- `MSSQL_COMMAND_TIMEOUT` - 命令超时时间（秒）
+- `MSSQL_POOL_SIZE` - 连接池大小
+- `MSSQL_MAX_OVERFLOW` - 最大溢出连接数
+- `MSSQL_TRUST_SERVER_CERTIFICATE` - 是否信任服务器证书
+- `MSSQL_ENCRYPT` - 是否加密连接
+- `MSSQL_MULTIPLE_ACTIVE_RESULT_SETS` - 是否启用多活动结果集
+- `MSSQL_APPLICATION_NAME` - 应用程序名称
 
 ### MySQL 配置
 - `MYSQL_HOST` - MySQL 服务器地址

@@ -106,16 +106,57 @@ Add the following configuration to your MCP client (such as Claude Desktop, Augm
       "command": "uvx",
       "args": ["mcp-db-filesystem@latest"],
       "env": {
-        "DB_SERVER": "localhost",
-        "DB_DATABASE": "your_database",
-        "DB_USERNAME": "your_username",
-        "DB_PASSWORD": "your_password",
-        "DB_USE_WINDOWS_AUTH": "false",
-        "DB_TRUST_SERVER_CERTIFICATE": "true",
-        "DB_ENCRYPT": "false",
+        // SQL Server Configuration (Optional)
+        "MSSQL_SERVER": "localhost",
+        "MSSQL_DATABASE": "your_database",
+        "MSSQL_USERNAME": "your_username",
+        "MSSQL_PASSWORD": "your_password",
+        "MSSQL_USE_WINDOWS_AUTH": "true",
+        "MSSQL_PORT": "1433",
+        "MSSQL_DRIVER": "ODBC Driver 17 for SQL Server",
+        "MSSQL_CONNECTION_TIMEOUT": "30",
+        "MSSQL_COMMAND_TIMEOUT": "30",
+        "MSSQL_POOL_SIZE": "5",
+        "MSSQL_MAX_OVERFLOW": "10",
+        "MSSQL_TRUST_SERVER_CERTIFICATE": "true",
+        "MSSQL_ENCRYPT": "false",
+        "MSSQL_MULTIPLE_ACTIVE_RESULT_SETS": "true",
+        "MSSQL_APPLICATION_NAME": "MCP-Db-Filesystem",
+
+        // MySQL Configuration (Optional)
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PORT": "3306",
+        "MYSQL_DATABASE": "your_mysql_database",
+        "MYSQL_USERNAME": "your_mysql_username",
+        "MYSQL_PASSWORD": "your_mysql_password",
+        "MYSQL_CHARSET": "utf8mb4",
+        "MYSQL_CONNECTION_TIMEOUT": "30",
+        "MYSQL_POOL_SIZE": "5",
+        "MYSQL_MAX_OVERFLOW": "10",
+
+        // Redis Configuration (Optional)
+        "REDIS_HOST": "localhost",
+        "REDIS_PORT": "6379",
+        "REDIS_DB": "0",
+        "REDIS_PASSWORD": "your_redis_password",
+        "REDIS_SOCKET_TIMEOUT": "30",
+        "REDIS_CONNECTION_TIMEOUT": "30",
+        "REDIS_MAX_CONNECTIONS": "10",
+
+        // Filesystem Configuration
         "FS_ALLOWED_PATHS": "*",
         "FS_ALLOWED_EXTENSIONS": "*.*",
-        "FS_IGNORE_FILE_LOCKS": "true"
+        "FS_IGNORE_FILE_LOCKS": "false",
+
+        // Security Configuration
+        "SECURITY_ENABLE_SQL_INJECTION_PROTECTION": "true",
+        "SECURITY_MAX_QUERY_LENGTH": "10000",
+        "SECURITY_ENABLE_QUERY_LOGGING": "true",
+        "SECURITY_LOG_SENSITIVE_DATA": "false",
+
+        // Server Configuration
+        "SERVER_LOG_LEVEL": "INFO",
+        "SERVER_DEBUG": "false"
       }
     }
   }
@@ -139,14 +180,42 @@ Add the following configuration to your MCP client (such as Claude Desktop, Augm
 
 ## 📋 Environment Variables
 
-### Database Configuration
-- `DB_SERVER` - SQL Server address
-- `DB_DATABASE` - Database name
-- `DB_USERNAME` - Username
-- `DB_PASSWORD` - Password
-- `DB_USE_WINDOWS_AUTH` - Whether to use Windows authentication
-- `DB_TRUST_SERVER_CERTIFICATE` - Whether to trust server certificate
-- `DB_ENCRYPT` - Whether to encrypt connection
+### SQL Server Configuration
+- `MSSQL_SERVER` - SQL Server address
+- `MSSQL_DATABASE` - Database name
+- `MSSQL_USERNAME` - Username
+- `MSSQL_PASSWORD` - Password
+- `MSSQL_USE_WINDOWS_AUTH` - Whether to use Windows authentication
+- `MSSQL_PORT` - SQL Server port (default 1433)
+- `MSSQL_DRIVER` - ODBC driver name
+- `MSSQL_CONNECTION_TIMEOUT` - Connection timeout (seconds)
+- `MSSQL_COMMAND_TIMEOUT` - Command timeout (seconds)
+- `MSSQL_POOL_SIZE` - Connection pool size
+- `MSSQL_MAX_OVERFLOW` - Maximum overflow connections
+- `MSSQL_TRUST_SERVER_CERTIFICATE` - Whether to trust server certificate
+- `MSSQL_ENCRYPT` - Whether to encrypt connection
+- `MSSQL_MULTIPLE_ACTIVE_RESULT_SETS` - Whether to enable multiple active result sets
+- `MSSQL_APPLICATION_NAME` - Application name
+
+### MySQL Configuration
+- `MYSQL_HOST` - MySQL server address
+- `MYSQL_PORT` - MySQL port (default 3306)
+- `MYSQL_DATABASE` - MySQL database name
+- `MYSQL_USERNAME` - MySQL username
+- `MYSQL_PASSWORD` - MySQL password
+- `MYSQL_CHARSET` - Character set (default utf8mb4)
+- `MYSQL_CONNECTION_TIMEOUT` - Connection timeout (seconds)
+- `MYSQL_POOL_SIZE` - Connection pool size
+- `MYSQL_MAX_OVERFLOW` - Maximum overflow connections
+
+### Redis Configuration
+- `REDIS_HOST` - Redis server address
+- `REDIS_PORT` - Redis port (default 6379)
+- `REDIS_DB` - Redis database number (default 0)
+- `REDIS_PASSWORD` - Redis password (optional)
+- `REDIS_SOCKET_TIMEOUT` - Socket timeout (seconds)
+- `REDIS_CONNECTION_TIMEOUT` - Connection timeout (seconds)
+- `REDIS_MAX_CONNECTIONS` - Maximum connections
 
 ### Filesystem Configuration
 - `FS_ALLOWED_PATHS` - Allowed access paths (`*` means all paths)
