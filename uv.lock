@@ -1087,7 +1087,7 @@ wheels = [
 ]
 
 [[package]]
-name = "mcp-sqlserver-filesystem"
+name = "mcp-db-filesystem"
 version = "0.1.4"
 source = { editable = "." }
 dependencies = [

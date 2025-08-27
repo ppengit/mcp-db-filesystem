@@ -1,8 +1,8 @@
-# MCP SQL Server Filesystem
+# MCP Database Filesystem
 
 English | [中文](README.md)
 
-A simple and efficient MCP (Model Context Protocol) server providing SQL Server database access and filesystem operations.
+A simple and efficient MCP (Model Context Protocol) server providing database access and filesystem operations.
 
 ## ✨ Key Features
 
@@ -73,7 +73,7 @@ odbcinst -j
 pip install uv
 
 # Run directly - no need to clone repository!
-uvx mcp-sqlserver-filesystem@latest
+uvx mcp-db-filesystem@latest
 ```
 
 ### 🔧 Configuration
@@ -83,7 +83,7 @@ Add the following configuration to your MCP client (such as Claude Desktop, Augm
 ```json
 {
   "mcpServers": {
-    "mcp-sqlserver-filesystem": {
+    "mcp-db-filesystem": {
       "command": "uvx",
       "args": ["mcp-sqlserver-filesystem@latest"],
       "env": {
@@ -140,14 +140,14 @@ Add the following configuration to your MCP client (such as Claude Desktop, Augm
 
 ```bash
 # Clone repository
-git clone https://github.com/ppengit/mcp-sqlserver-filesystem.git
-cd mcp-sqlserver-filesystem
+git clone https://github.com/ppengit/mcp-db-filesystem.git
+cd mcp-db-filesystem
 
 # Install dependencies
 uv sync
 
 # Run server
-uv run python -m mcp_sqlserver_filesystem server
+uv run python -m mcp_db_filesystem server
 ```
 
 ### Testing
@@ -187,7 +187,7 @@ A: Check `FS_ALLOWED_PATHS` and `FS_ALLOWED_EXTENSIONS` configuration to ensure 
 
 ## 📞 Support
 
-- GitHub Issues: [https://github.com/ppengit/mcp-sqlserver-filesystem/issues](https://github.com/ppengit/mcp-sqlserver-filesystem/issues)
+- GitHub Issues: [https://github.com/ppengit/mcp-db-filesystem/issues](https://github.com/ppengit/mcp-db-filesystem/issues)
 
 ## 🔄 Changelog
 

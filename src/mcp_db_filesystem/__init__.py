@@ -1,11 +1,11 @@
 """
-MCP SQL Server Filesystem
-=========================
+MCP Database Filesystem
+=======================
 
-A simple and efficient MCP server for SQL Server database access and filesystem operations.
+A simple and efficient MCP server for database access and filesystem operations.
 
 Features:
-- SQL Server database operations (queries, commands, schema inspection)
+- Database operations (queries, commands, schema inspection)
 - Filesystem operations (read, write, directory listing)
 - Security features (SQL injection protection, filesystem access control)
 - Environment variable configuration
@@ -16,7 +16,7 @@ Email: peng.it@qq.com
 License: MIT
 """
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 __author__ = "PJ"
 __email__ = "peng.it@qq.com"
 __license__ = "MIT"

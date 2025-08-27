@@ -30,7 +30,7 @@ class DatabaseConfig(BaseModel):
     trust_server_certificate: bool = Field(True, description="Trust server certificate (TrustServerCertificate)")
     encrypt: bool = Field(False, description="Enable encryption (Encrypt)")
     multiple_active_result_sets: bool = Field(True, description="Enable multiple active result sets (MultipleActiveResultSets)")
-    application_name: str = Field("MCP-SQLServer-Filesystem", description="Application name for connection tracking")
+    application_name: str = Field("MCP-Db-Filesystem", description="Application name for connection tracking")
     
     @validator('port')
     def validate_port(cls, v):
@@ -138,7 +138,7 @@ class SecurityConfig(BaseModel):
 class ServerConfig(BaseModel):
     """MCP server configuration."""
     
-    name: str = Field("mcp-sqlserver-filesystem", description="Server name")
+    name: str = Field("mcp-db-filesystem", description="Server name")
     version: str = Field(__version__, description="Server version")
     debug: bool = Field(False, description="Enable debug mode")
     log_level: str = Field("INFO", description="Logging level")
@@ -181,7 +181,7 @@ class Config(BaseModel):
             trust_server_certificate=os.getenv('DB_TRUST_SERVER_CERTIFICATE', 'true').lower() == 'true',
             encrypt=os.getenv('DB_ENCRYPT', 'false').lower() == 'true',
             multiple_active_result_sets=os.getenv('DB_MULTIPLE_ACTIVE_RESULT_SETS', 'true').lower() == 'true',
-            application_name=os.getenv('DB_APPLICATION_NAME', 'MCP-SQLServer-Filesystem'),
+            application_name=os.getenv('DB_APPLICATION_NAME', 'MCP-Db-Filesystem'),
         )
         
         # Filesystem configuration

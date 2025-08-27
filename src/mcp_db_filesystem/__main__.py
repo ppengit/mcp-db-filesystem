@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-MCP SQL Server Filesystem - Main Entry Point
-============================================
+MCP Database Filesystem - Main Entry Point
+===========================================
 
-This file allows the package to be executed via `python -m mcp_sqlserver_filesystem`.
+This file allows the package to be executed via `python -m mcp_db_filesystem`.
 
 Usage:
-  python -m mcp_sqlserver_filesystem        # Start MCP server
-  python -m mcp_sqlserver_filesystem version # Show version
+  python -m mcp_db_filesystem        # Start MCP server
+  python -m mcp_db_filesystem version # Show version
 """
 
 import argparse
@@ -33,7 +33,7 @@ if sys.platform == "win32":
 def main():
     """Main entry point"""
     parser = argparse.ArgumentParser(
-        description="MCP SQL Server Filesystem - Simple and efficient MCP server for SQL Server and filesystem access"
+        description="MCP Database Filesystem - Simple and efficient MCP server for database and filesystem access"
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -66,9 +66,9 @@ def show_version():
     """Show version information"""
     from . import __author__, __version__
 
-    print(f"MCP SQL Server Filesystem v{__version__}")
+    print(f"MCP Database Filesystem v{__version__}")
     print(f"Author: {__author__}")
-    print("GitHub: https://github.com/ppengit/mcp-sqlserver-filesystem")
+    print("GitHub: https://github.com/ppengit/mcp-db-filesystem")
 
 
 if __name__ == "__main__":

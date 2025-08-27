@@ -3,16 +3,16 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mcp-sqlserver-filesystem"
-version = "1.0.3"
-description = "Simple and efficient MCP server for SQL Server database access and filesystem operations"
+name = "mcp-db-filesystem"
+version = "1.0.4"
+description = "Simple and efficient MCP server for database access and filesystem operations"
 authors = [
     {name = "PJ", email = "peng.it@qq.com"}
 ]
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.11"
-keywords = ["mcp", "sqlserver", "filesystem", "database", "cross-platform", "server"]
+keywords = ["mcp", "mysql", "sqlserver", "filesystem", "database", "cross-platform", "server"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -48,15 +48,15 @@ dev = [
 ]
 
 [project.scripts]
-mcp-sqlserver-filesystem = "mcp_sqlserver_filesystem.__main__:main"
+mcp-db-filesystem = "mcp_db_filesystem.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/ppengit/mcp-sqlserver-filesystem"
-Repository = "https://github.com/ppengit/mcp-sqlserver-filesystem"
-Issues = "https://github.com/ppengit/mcp-sqlserver-filesystem/issues"
+Homepage = "https://github.com/ppengit/mcp-db-filesystem"
+Repository = "https://github.com/ppengit/mcp-db-filesystem"
+Issues = "https://github.com/ppengit/mcp-db-filesystem/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/mcp_sqlserver_filesystem"]
+packages = ["src/mcp_db_filesystem"]
 
 [tool.hatch.build.targets.sdist]
 include = [

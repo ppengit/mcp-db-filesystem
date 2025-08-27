@@ -1,4 +1,4 @@
-"""MCP Server for SQL Server and Filesystem Access."""
+"""MCP Server for Database and Filesystem Access."""
 
 import asyncio
 import logging
@@ -38,7 +38,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Create MCP server instance
-server = Server("mcp-sqlserver-filesystem")
+server = Server("mcp-db-filesystem")
 
 
 @server.list_resources()
@@ -659,7 +659,7 @@ async def handle_list_directory(arguments: Dict[str, Any]) -> List[TextContent]:
 
 async def main():
     """Main entry point for the MCP server."""
-    logger.info("Starting MCP SQL Server Filesystem server...")
+    logger.info("Starting MCP Database Filesystem server...")
 
     # Test database connection on startup (non-blocking)
     try:
@@ -676,7 +676,7 @@ async def main():
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="mcp-sqlserver-filesystem",
+                server_name="mcp-db-filesystem",
                 server_version=__version__,
                 capabilities=ServerCapabilities(
                     tools=ToolsCapability(list_changed=True),

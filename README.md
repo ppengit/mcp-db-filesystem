@@ -1,8 +1,8 @@
-# MCP SQL Server Filesystem
+# MCP Database Filesystem
 
 [English](README_EN.md) | 中文
 
-一个简洁高效的 MCP (Model Context Protocol) 服务器，提供 SQL Server 数据库访问和文件系统操作功能。
+一个简洁高效的 MCP (Model Context Protocol) 服务器，提供数据库访问和文件系统操作功能。
 
 ## ✨ 主要特性
 
@@ -73,7 +73,7 @@ odbcinst -j
 pip install uv
 
 # 直接运行 - 无需克隆仓库！
-uvx mcp-sqlserver-filesystem@latest
+uvx mcp-db-filesystem@latest
 ```
 
 ### 🔧 配置
@@ -140,14 +140,14 @@ uvx mcp-sqlserver-filesystem@latest
 
 ```bash
 # 克隆仓库
-git clone https://github.com/ppengit/mcp-sqlserver-filesystem.git
-cd mcp-sqlserver-filesystem
+git clone https://github.com/ppengit/mcp-db-filesystem.git
+cd mcp-db-filesystem
 
 # 安装依赖
 uv sync
 
 # 运行服务器
-uv run python -m mcp_sqlserver_filesystem server
+uv run python -m mcp_db_filesystem server
 ```
 
 ### 测试
@@ -187,7 +187,7 @@ A: 检查 `FS_ALLOWED_PATHS` 和 `FS_ALLOWED_EXTENSIONS` 配置，确保路径�
 
 ## 📞 支持
 
-- GitHub Issues: [https://github.com/ppengit/mcp-sqlserver-filesystem/issues](https://github.com/ppengit/mcp-sqlserver-filesystem/issues)
+- GitHub Issues: [https://github.com/ppengit/mcp-db-filesystem/issues](https://github.com/ppengit/mcp-db-filesystem/issues)
 
 ## 🔄 更新日志
 

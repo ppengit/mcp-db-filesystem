@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2025-08-26
+
+### Changed
+- **BREAKING**: Project renamed from `mcp-sqlserver-filesystem` to `mcp-db-filesystem`
+- Package name changed from `mcp_sqlserver_filesystem` to `mcp_db_filesystem`
+- Updated all documentation and references to reflect new name
+- Repository moved to https://github.com/ppengit/mcp-db-filesystem
+
+### Migration Guide
+- Update import statements from `mcp_sqlserver_filesystem` to `mcp_db_filesystem`
+- Update command line usage from `mcp-sqlserver-filesystem` to `mcp-db-filesystem`
+- Update pip install command to `pip install mcp-db-filesystem`
+
 ## [1.0.3] - 2025-08-26
 
 ### Added
