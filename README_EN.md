@@ -146,6 +146,9 @@ Add the following configuration to your MCP client (such as Claude Desktop, Augm
         // Filesystem Configuration
         "FS_ALLOWED_PATHS": "*",
         "FS_ALLOWED_EXTENSIONS": "*.*",
+        "FS_MAX_FILE_SIZE": "1073741824",
+        "FS_ENABLE_WRITE": "true",
+        "FS_ENABLE_DELETE": "true",
         "FS_IGNORE_FILE_LOCKS": "false",
 
         // Security Configuration
@@ -177,6 +180,8 @@ Add the following configuration to your MCP client (such as Claude Desktop, Augm
 - `read_file` - Read file contents
 - `write_file` - Write file contents
 - `list_directory` - List directory contents
+- `delete_file` - Delete files (requires confirmation)
+- `create_directory` - Create directories
 
 ## 📋 Environment Variables
 
@@ -220,6 +225,9 @@ Add the following configuration to your MCP client (such as Claude Desktop, Augm
 ### Filesystem Configuration
 - `FS_ALLOWED_PATHS` - Allowed access paths (`*` means all paths)
 - `FS_ALLOWED_EXTENSIONS` - Allowed file extensions (`*.*` means all files)
+- `FS_MAX_FILE_SIZE` - Maximum file size (bytes)
+- `FS_ENABLE_WRITE` - Enable write operations
+- `FS_ENABLE_DELETE` - Enable delete operations
 - `FS_IGNORE_FILE_LOCKS` - Whether to ignore file locks
 
 ## 🔧 Development

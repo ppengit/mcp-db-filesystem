@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2025-08-26
+
+### Added
+- **File Deletion**: Added `delete_file` tool for file deletion with confirmation requirement
+- **Directory Creation**: Added `create_directory` tool for creating directories
+- **Complete Filesystem Operations**: Now supports full CRUD operations for files and directories
+
+### Fixed
+- **Critical Bug**: Fixed missing file deletion functionality that was implemented but not exposed
+- **Tool Completeness**: Ensured all implemented tools are properly registered and accessible
+- **Documentation**: Updated README with complete tool listings and configuration options
+
+### Enhanced
+- **Comprehensive Testing**: Added thorough testing for all 22 tools across all categories
+- **Error Handling**: Improved error handling and user feedback for all filesystem operations
+- **Configuration Documentation**: Added complete filesystem configuration options
+
+### Tools Summary
+- **SQL Server Tools**: 4 tools (sql_query, sql_execute, get_table_schema, list_tables)
+- **MySQL Tools**: 4 tools (mysql_query, mysql_execute, mysql_get_table_schema, mysql_list_tables)
+- **Redis Tools**: 5 tools (redis_get, redis_set, redis_delete, redis_keys, redis_info)
+- **Database Management**: 4 tools (database_status, database_reconnect, mysql_reconnect, redis_reconnect)
+- **Filesystem Tools**: 5 tools (read_file, write_file, list_directory, delete_file, create_directory)
+
+**Total: 22 fully functional tools**
+
 ## [1.1.1] - 2025-08-26
 
 ### Changed

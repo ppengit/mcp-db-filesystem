@@ -476,6 +476,44 @@ async def handle_list_tools() -> List[Tool]:
                 "required": ["dir_path"]
             }
         ),
+        Tool(
+            name="delete_file",
+            description="Delete a file",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "file_path": {
+                        "type": "string",
+                        "description": "Path to the file to delete"
+                    },
+                    "confirm": {
+                        "type": "boolean",
+                        "description": "Confirm file deletion",
+                        "default": False
+                    }
+                },
+                "required": ["file_path"]
+            }
+        ),
+        Tool(
+            name="create_directory",
+            description="Create a directory",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "dir_path": {
+                        "type": "string",
+                        "description": "Path to the directory to create"
+                    },
+                    "parents": {
+                        "type": "boolean",
+                        "description": "Create parent directories if they don't exist",
+                        "default": True
+                    }
+                },
+                "required": ["dir_path"]
+            }
+        ),
     ])
 
     return tools
@@ -543,6 +581,10 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[TextCon
             return await handle_write_file(arguments)
         elif name == "list_directory":
             return await handle_list_directory(arguments)
+        elif name == "delete_file":
+            return await handle_delete_file(arguments)
+        elif name == "create_directory":
+            return await handle_create_directory(arguments)
 
         else:
             raise ValueError(f"Unknown tool: {name}")
@@ -1131,6 +1173,54 @@ async def handle_list_directory(arguments: Dict[str, Any]) -> List[TextContent]:
 
     except Exception as e:
         error_msg = f"Failed to list directory: {str(e)}"
+        logger.error(error_msg)
+        return [TextContent(type="text", text=error_msg)]
+
+
+async def handle_delete_file(arguments: Dict[str, Any]) -> List[TextContent]:
+    """Handle file deletion."""
+    file_path = arguments.get("file_path", "")
+    confirm = arguments.get("confirm", False)
+
+    try:
+        from pathlib import Path
+        path = Path(file_path)
+
+        # Check if file exists
+        if not path.exists():
+            return [TextContent(type="text", text=f"File does not exist: '{file_path}'")]
+
+        # Require confirmation for file deletion
+        if not confirm:
+            return [TextContent(
+                type="text",
+                text=f"File deletion requires confirmation. Please add 'confirm': true to delete: '{file_path}'"
+            )]
+
+        fs_manager.delete_file(file_path)
+
+        response_text = f"File deleted successfully: '{file_path}'"
+        return [TextContent(type="text", text=response_text)]
+
+    except Exception as e:
+        error_msg = f"Failed to delete file: {str(e)}"
+        logger.error(error_msg)
+        return [TextContent(type="text", text=error_msg)]
+
+
+async def handle_create_directory(arguments: Dict[str, Any]) -> List[TextContent]:
+    """Handle directory creation."""
+    dir_path = arguments.get("dir_path", "")
+    parents = arguments.get("parents", True)
+
+    try:
+        fs_manager.create_directory(dir_path, parents)
+
+        response_text = f"Directory created successfully: '{dir_path}'"
+        return [TextContent(type="text", text=response_text)]
+
+    except Exception as e:
+        error_msg = f"Failed to create directory: {str(e)}"
         logger.error(error_msg)
         return [TextContent(type="text", text=error_msg)]
 

@@ -155,6 +155,9 @@ uvx mcp-db-filesystem@latest
         // Filesystem Configuration
         "FS_ALLOWED_PATHS": "*",
         "FS_ALLOWED_EXTENSIONS": "*.*",
+        "FS_MAX_FILE_SIZE": "1073741824",
+        "FS_ENABLE_WRITE": "true",
+        "FS_ENABLE_DELETE": "true",
         "FS_IGNORE_FILE_LOCKS": "false",
 
         // Security Configuration
@@ -203,6 +206,10 @@ uvx mcp-db-filesystem@latest
 - `read_file` - 读取文件内容
 - `write_file` - 写入文件内容
 - `list_directory` - 列出目录内容
+- `delete_file` - 删除文件（需要确认）
+- `create_directory` - 创建目录
+- `delete_file` - 删除文件（需要确认）
+- `create_directory` - 创建目录
 
 ## 📋 环境变量
 
@@ -246,6 +253,9 @@ uvx mcp-db-filesystem@latest
 ### 文件系统配置
 - `FS_ALLOWED_PATHS` - 允许访问的路径（`*` 表示所有路径）
 - `FS_ALLOWED_EXTENSIONS` - 允许的文件扩展名（`*.*` 表示所有文件）
+- `FS_MAX_FILE_SIZE` - 最大文件大小（字节）
+- `FS_ENABLE_WRITE` - 是否启用写操作
+- `FS_ENABLE_DELETE` - 是否启用删除操作
 - `FS_IGNORE_FILE_LOCKS` - 是否忽略文件锁
 
 ## 🔧 开发
