@@ -58,13 +58,24 @@ class DatabaseConfig(BaseModel):
                 f"PWD={self.password}",
             ])
 
-        # 增强的连接参数
-        enhanced_params = [
-            f"TrustServerCertificate={'yes' if self.trust_server_certificate else 'no'}",
-            f"Encrypt={'yes' if self.encrypt else 'no'}",
-            f"MultipleActiveResultSets={'yes' if self.multiple_active_result_sets else 'no'}",
-            f"Application Name={self.application_name}",
-        ]
+        # 增强的连接参数 (使用兼容的ODBC格式)
+        enhanced_params = []
+
+        # 只在需要时添加 TrustServerCertificate (某些驱动版本不支持)
+        if self.trust_server_certificate:
+            enhanced_params.append("TrustServerCertificate=yes")
+
+        # 只在需要时添加 Encrypt
+        if self.encrypt:
+            enhanced_params.append("Encrypt=yes")
+        else:
+            enhanced_params.append("Encrypt=no")
+
+        # MultipleActiveResultSets
+        enhanced_params.append(f"MultipleActiveResultSets={'yes' if self.multiple_active_result_sets else 'no'}")
+
+        # Application Name
+        enhanced_params.append(f"Application Name={self.application_name}")
 
         # 合并所有参数
         all_params = base_params + enhanced_params

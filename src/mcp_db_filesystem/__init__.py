@@ -16,7 +16,7 @@ Email: peng.it@qq.com
 License: MIT
 """
 
-__version__ = "1.1.3"
+__version__ = "1.1.4"
 __author__ = "PJ"
 __email__ = "peng.it@qq.com"
 __license__ = "MIT"

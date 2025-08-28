@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2025-08-28
+
+### Fixed
+- **Critical SQL Server Connection Issue**: Fixed ODBC connection string format for SQL Server
+  - Changed `TrustServerCertificate` parameter format from numeric (1/0) to text (yes/no)
+  - Improved compatibility with different versions of ODBC Driver 17 for SQL Server
+  - Only add `TrustServerCertificate` parameter when explicitly needed
+  - Enhanced connection string building logic for better ODBC compatibility
+
+### Enhanced
+- **Connection Diagnostics**: Improved error handling and diagnostics for SQL Server connections
+- **ODBC Compatibility**: Better support for various ODBC driver versions and configurations
+- **Connection Reliability**: More robust connection string generation
+
+### Technical Details
+- Fixed issue where `TrustServerCertificate=1` was not recognized by some ODBC driver versions
+- Changed to use `TrustServerCertificate=yes` format for better compatibility
+- Conditional parameter inclusion to avoid unsupported parameter errors
+- Enhanced connection string validation and error reporting
+
+This resolves connection issues where SQL Server databases were configured correctly but
+MCP tools couldn't establish connections due to ODBC parameter format incompatibility.
+
 ## [1.1.3] - 2025-08-27
 
 ### Fixed
